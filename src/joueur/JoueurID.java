@@ -13,6 +13,7 @@ public class JoueurID {
     private String nom;
     private String etat;
     private boolean ready;
+    private boolean alive = true;
 
     public JoueurID(Socket socket, String noms){
         clientSocket = socket;
@@ -77,5 +78,9 @@ public class JoueurID {
 
     public Socket getClientSocket() {
         return clientSocket;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

@@ -11,6 +11,6 @@ public class ProtocoleNouveauJoueur implements IProtocole {
     public void execute(IContext aContext, Socket s) {
         Game game = (Game) aContext;
 
-//        game.addJoueur
+        game.addJoueur(s);
     }
 }

@@ -22,7 +22,6 @@ class ProcessusTransaction extends Thread {
 
 			monServeurTCP.getProtocole().execute( monServeurTCP.getContexte() , clientSocket);
 
-			System.out.println("Processus transaction fait");
 		} catch (Exception e) {
 			System.err.println("[ProcessusTransaction] Exception : " + e );
 			e.printStackTrace();
