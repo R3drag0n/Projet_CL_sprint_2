@@ -2,6 +2,7 @@ package serveur;
 
 import joueur.JoueurGUI;
 import joueur.JoueurID;
+import launchPattern.ProtocoleManche5J;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,14 +12,17 @@ import java.util.Collections;
 public class Game implements IContext {
     public ArrayList<JoueurID> lesJoueurs = new ArrayList<>();
     public int nbJoueur = 0;
+    private int port = 6666;
 
 
     public void addJoueur(Socket socket) {
-        JoueurID joueurID = new JoueurID(socket, "Joueur "+nbJoueur);
+        JoueurID joueurID = new JoueurID(socket, "Joueur "+nbJoueur, this);
         lesJoueurs.add(joueurID);
         nbJoueur ++;
 
         if (nbJoueur >= 3) {
+//            ServeurTCP phase = new ServeurTCP(this, new ProtocoleManche5J(), port);
+//            phase.start();
             startGame();
         }
     }
@@ -27,8 +31,9 @@ public class Game implements IContext {
         System.out.println("Game started with :"+lesJoueurs);
         for (JoueurID joueur : lesJoueurs) {
             System.out.println(joueur);
-            uneManche(joueur);
-
+//            uneManche(joueur);
+            ProcessusManche5J p5J = new ProcessusManche5J(joueur);
+            p5J.start();
         }
     }
 
@@ -41,7 +46,6 @@ public class Game implements IContext {
             OutputStream unOutput = joueur.getClientSocket().getOutputStream();
 
             ArrayList<Integer> reponses = new ArrayList<Integer>();
-            boolean toutLeMondeARepondu = false;
             BufferedReader is = new BufferedReader(new InputStreamReader(unInput));
             PrintStream os = new PrintStream(unOutput);
 
